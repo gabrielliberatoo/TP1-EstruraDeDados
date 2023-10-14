@@ -20,15 +20,21 @@ void ArvoreBinaria::InsereRecursivo(TipoNo *&p, std::string item)
 {
     if (p == NULL)
     {
-        p = new TipoNo();
-        p->item = item;
+        p = new TipoNo(item);
     }
     else
     {
-        if (item < p->item)
-            InsereRecursivo(p->esq, item);
-        else
-            InsereRecursivo(p->dir, item);
+        size_t pos = p->item.find("e");
+        if (pos != std::string::npos)
+        {
+            TipoNo *NoEsq = new TipoNo(p->item);
+            NoEsq->item[pos] = '0';
+            InsereRecursivo(p->esq, NoEsq->item);
+
+            TipoNo *NoDir = new TipoNo(p->item);
+            NoDir->item[pos] = '1';
+            InsereRecursivo(p->dir, NoDir->item);
+        }
     }
 }
 

@@ -3,8 +3,8 @@
 class TipoNo
 {
 public:
-    TipoNo(){
-        item = "-1";
+    TipoNo(std::string expressao){
+        item = expressao;
         esq = NULL;
         dir = NULL;
     }
