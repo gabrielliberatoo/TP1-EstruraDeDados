@@ -13,3 +13,15 @@ void Expressao::DivideEntrada(std::string entrada) {
         valoracao = "";
     }
 }
+
+std::string AtribuiValor(std::string expressao, std::string valoracao) {
+    std::string expressaoAtualizada = expressao;
+    for (int i = 0; i < valoracao.length(); i++) {
+        for (int j = 0; j < expressao.length(); j++) {
+            if (expressao[j] == static_cast<char>('0' + i)) {
+                expressaoAtualizada[j] = valoracao[i];
+            }
+        }
+    }
+    return expressaoAtualizada;
+}
