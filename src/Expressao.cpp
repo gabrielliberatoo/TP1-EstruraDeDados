@@ -14,7 +14,7 @@ void Expressao::DivideEntrada(std::string entrada) {
     }
 }
 
-std::string AtribuiValor(std::string expressao, std::string valoracao) {
+void Expressao::AtribuiValor(std::string expressao, std::string valoracao) {
     std::string expressaoAtualizada = expressao;
     for (int i = 0; i < valoracao.length(); i++) {
         for (int j = 0; j < expressao.length(); j++) {
@@ -23,5 +23,79 @@ std::string AtribuiValor(std::string expressao, std::string valoracao) {
             }
         }
     }
-    return expressaoAtualizada;
+    expressao = expressaoAtualizada;
+}
+
+void Expressao::SeparaOpera(std::string expressao){
+    for (char c : expressao) {
+        if (isdigit(c)) {
+            valores += c;
+        } else if (!isspace(c)) {
+            operadores += c;
+        }
+    }
+}
+
+int Expressao::AvaliaExpressao(std::string expressao) {
+    PilhaEncadeada operadores;
+    PilhaEncadeada valores;
+
+    for (char c : expressao) {
+        if (c == ' ') {
+            continue;
+        }
+
+        if (c == '(') {
+            operadores.Empilha(c);
+        } else if (c == ')' && !operadores.Vazia()) {
+            while (operadores.ItemNoTopo() != '(') {
+                char op = operadores.Desempilha();
+                char var2 = valores.Desempilha();
+                char var1 = valores.Desempilha();
+                char resultado = realizaOperacao(var1, var2, op);
+                valores.Empilha(resultado);
+            }
+            operadores.Desempilha();
+        } else if (c == '~' || c == '&' || c == '|') {
+            while (!operadores.Vazia() && precedencia(c) <= precedencia(operadores.ItemNoTopo())) {
+                char op = operadores.Desempilha();
+                char var2 = valores.Desempilha();
+                char var1 = valores.Desempilha();
+                char resultado = realizaOperacao(var1, var2, op);
+                valores.Empilha(resultado);
+            }
+            operadores.Empilha(c);
+        } else {
+            valores.Empilha(c);
+        }
+    }
+
+    while (!operadores.Vazia()) {
+        char op = operadores.Desempilha();
+        char var2 = valores.Desempilha();
+        char var1 = valores.Desempilha();
+        char resultado = realizaOperacao(var1, var2, op);
+        valores.Empilha(resultado);
+    }
+
+    return valores.Desempilha();
+}
+
+int Expressao::precedencia(char operador) {
+    if (operador == '~') return 3;
+    if (operador == '&') return 2;
+    if (operador == '|') return 1;
+    return 0;
+}
+
+int Expressao::realizaOperacao(char var1, char var2, char operador) {
+    if (operador == '&') {
+        return (var1 == '1' && var2 == '1') ? 1 : 0;
+    } else if (operador == '|') {
+        return (var1 == '1' || var2 == '1') ? 1 : 0;
+    } else if (operador == '~') {
+        return (var1 == '0') ? 1 : 0;
+    } else {
+        return 0;
+    }
 }

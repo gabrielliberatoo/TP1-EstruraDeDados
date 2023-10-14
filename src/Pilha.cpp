@@ -12,7 +12,7 @@ PilhaEncadeada::~PilhaEncadeada()
     Limpa();
 }
 
-void PilhaEncadeada::Empilha(std::string item)
+void PilhaEncadeada::Empilha(char item)
 {
     TipoCelula *nova;
     nova = new TipoCelula();
@@ -22,9 +22,9 @@ void PilhaEncadeada::Empilha(std::string item)
     tamanho++;
 };
 
-std::string PilhaEncadeada::Desempilha()
+char PilhaEncadeada::Desempilha()
 {
-    std::string aux;
+    char aux;
     TipoCelula *p;
 
     if (tamanho == 0)
