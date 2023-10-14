@@ -2,7 +2,10 @@
 
 struct TipoCelula{
 public:
-    TipoCelula();
+    TipoCelula(){
+        prox = NULL;
+        item = '-1';
+    }
 
 private:
     char item;

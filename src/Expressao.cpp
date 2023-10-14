@@ -14,7 +14,7 @@ void Expressao::DivideEntrada(std::string entrada) {
     }
 }
 
-void Expressao::AtribuiValor(std::string expressao, std::string valoracao) {
+std::string Expressao::AtribuiValor(std::string expressao, std::string valoracao) {
     std::string expressaoAtualizada = expressao;
     for (int i = 0; i < valoracao.length(); i++) {
         for (int j = 0; j < expressao.length(); j++) {
@@ -23,24 +23,17 @@ void Expressao::AtribuiValor(std::string expressao, std::string valoracao) {
             }
         }
     }
-    expressao = expressaoAtualizada;
+    return expressaoAtualizada;
 }
 
-void Expressao::SeparaOpera(std::string expressao){
-    for (char c : expressao) {
-        if (isdigit(c)) {
-            valores += c;
-        } else if (!isspace(c)) {
-            operadores += c;
-        }
-    }
-}
 
-int Expressao::AvaliaExpressao(std::string expressao) {
+int Expressao::AvaliaExpressao(std::string expressao, std::string valoracao) {
     PilhaEncadeada operadores;
     PilhaEncadeada valores;
+    std::string expreValor = AtribuiValor(expressao,valoracao);
 
-    for (char c : expressao) {
+
+    for (char c : expreValor) {
         if (c == ' ') {
             continue;
         }
@@ -98,4 +91,10 @@ int Expressao::realizaOperacao(char var1, char var2, char operador) {
     } else {
         return 0;
     }
+}
+
+std::string Expressao::Satisfabilidade(std::string expressao, std::string valoracao){
+    ArvoreBinaria possibilidades;
+    possibilidades.Insere(valoracao);
+    
 }
