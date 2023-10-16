@@ -1,5 +1,5 @@
 #include "ArvoreBinaria.hpp"
-#include <string.h>
+
 
 ArvoreBinaria::ArvoreBinaria()
 {
@@ -39,16 +39,6 @@ void ArvoreBinaria::InsereRecursivo(TipoNo *&p, std::string item)
 }
 
 
-void ArvoreBinaria::PosOrdem(TipoNo *p)
-{
-    if (p != NULL)
-    {
-        PosOrdem(p->esq);
-        PosOrdem(p->dir);
-        std::string resultado = p.avaliaExpressao()->item;
-    }
-}
-
 void ArvoreBinaria::Limpa()
 {
     ApagaRecursivo(raiz);
@@ -67,20 +57,20 @@ void ArvoreBinaria::ApagaRecursivo(TipoNo *p)
 
 
 std::string ArvoreBinaria::GerarValoracoes(const std::string& expressao, const std::string& variaveis, const std::string& valoracao) {
+    Expressao obj;
     if (variaveis.empty()) {
-        // Todas as variáveis foram substituídas na valoração, avalie a expressão
-        int resultado = AvaliaExpressao(expressao, valoracao);
+        int resultado = obj.AvaliaExpressao(expressao, valoracao);
         return resultado == 1 ? valoracao : "";
     }
 
     char primeiraVar = variaveis[0];
     std::string restanteVariaveis = variaveis.substr(1);
 
-    std::string valoraçãoComZero = valoracao + primeiraVar + "=0, ";
-    std::string valoraçãoComUm = valoracao + primeiraVar + "=1, ";
+    std::string valoracaoComZero = valoracao + primeiraVar + "=0, ";
+    std::string valoracaoComUm = valoracao + primeiraVar + "=1, ";
 
-    std::string resultadoComZero = GerarValoracoes(expressao, restanteVariaveis, valoraçãoComZero);
-    std::string resultadoComUm = GerarValoracoes(expressao, restanteVariaveis, valoraçãoComUm);
+    std::string resultadoComZero = GerarValoracoes(expressao, restanteVariaveis, valoracaoComZero);
+    std::string resultadoComUm = GerarValoracoes(expressao, restanteVariaveis, valoracaoComUm);
 
     return resultadoComZero + resultadoComUm;
 }
@@ -88,7 +78,7 @@ std::string ArvoreBinaria::GerarValoracoes(const std::string& expressao, const s
 
 
 std::string ArvoreBinaria::Satisfabilidade() {
-    std::string valoraçãoSatisfatória = ""; // String para armazenar a valoração satisfatória
+    std::string valoraçãoSatisfatória = "";
     bool existeValoraçãoSatisfatória = encontraValoracaoSatisfatoria(raiz, valoraçãoSatisfatória);
 
     if (existeValoraçãoSatisfatória) {
@@ -100,30 +90,30 @@ std::string ArvoreBinaria::Satisfabilidade() {
 
 bool ArvoreBinaria::encontraValoracaoSatisfatoria(TipoNo *p, std::string &valoração) {
     if (p == nullptr) {
-        return true; // Se chegamos ao final da árvore, a valoração é satisfatória
+        return true; 
     }
 
-    // Extrair a variável atual
+    
     std::string variavel = p->item;
 
-    // Verificar o quantificador atual
-    if (variavel[0] == 'e') { // Se é um quantificador de existência
+   
+    if (variavel[0] == 'e') { 
         for (char valor : {'0', '1'}) {
             valoração += valor;
             if (encontraValoracaoSatisfatoria(p->esq, valoração)) {
-                return true; // Se encontrarmos uma valoração satisfatória, pare
+                return true; 
             }
-            valoração.pop_back(); // Desfaz a última valoração para tentar outra
+            valoração.pop_back(); 
         }
-    } else if (variavel[0] == 'a') { // Se é um quantificador universal
+    } else if (variavel[0] == 'a') { 
         for (char valor : {'0', '1'}) {
             valoração += valor;
             if (!encontraValoracaoSatisfatoria(p->esq, valoração)) {
-                return false; // Se não encontrarmos uma valoração satisfatória, pare
+                return false; 
             }
-            valoração.pop_back(); // Desfaz a última valoração para tentar outra
+            valoração.pop_back(); 
         }
     }
 
-    return false; // Se não foi possível encontrar uma valoração satisfatória
+    return false; 
 }

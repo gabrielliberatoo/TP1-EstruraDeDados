@@ -1,10 +1,12 @@
+#ifndef PILHA_HPP
+#define PILHA_HPP
 #include <string>
 
 struct TipoCelula{
 public:
     TipoCelula(){
         prox = NULL;
-        item = '-1';
+        item = 'x';
     }
 
 private:
@@ -38,3 +40,5 @@ private:
 
     friend class Expressao;
 };
+
+#endif

@@ -1,26 +1,30 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall
-
-
+CXXFLAGS = -Wall
+LDFLAGS = -lm
 SRC_DIR = src
-INCLUDE_DIR = include
 OBJ_DIR = obj
+INC_DIR = include
 BIN_DIR = bin
+EXE = $(BIN_DIR)/tp1
 
 SRCS = $(wildcard $(SRC_DIR)/*.cpp)
-OBJS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRCS))
+OBJS = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
 
-EXECUTABLE = $(BIN_DIR)/seu_programa
+all: $(EXE)
 
-all: $(EXECUTABLE)
+$(EXE): $(OBJS) | $(BIN_DIR)
+	$(CXX) -o $(EXE) $(OBJS) $(LDFLAGS)
 
-$(EXECUTABLE): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) -I$(INC_DIR) -o $@ -c $<
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXXFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
+$(BIN_DIR):
+	mkdir -p $(BIN_DIR)
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
 clean:
-	rm -f $(OBJS) $(EXECUTABLE)
+	rm -f $(EXE) $(OBJS)
 
 .PHONY: all clean

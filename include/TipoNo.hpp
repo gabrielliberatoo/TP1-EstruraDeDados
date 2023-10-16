@@ -1,3 +1,5 @@
+#ifndef TIPONO_HPP
+#define TIPONO_HPP
 #include <string>
 
 class TipoNo
@@ -15,3 +17,5 @@ private:
     TipoNo *dir;
     friend class ArvoreBinaria;
 };
+
+#endif

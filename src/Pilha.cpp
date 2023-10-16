@@ -1,5 +1,4 @@
 #include "Pilha.hpp"
-#include <string>
 
 PilhaEncadeada::PilhaEncadeada()
 {
