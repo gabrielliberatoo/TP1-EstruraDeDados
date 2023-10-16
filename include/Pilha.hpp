@@ -1,4 +1,4 @@
-
+#include <string>
 
 struct TipoCelula{
 public:

@@ -11,9 +11,12 @@ public:
     int realizaOperacao(char var1, char var2, char op);
     int precedencia(char operador);
     std::string Satisfabilidade(std::string expressao, std::string valoracao);
+    std::string Satisfabilidade(const std::string& expressao, const std::string& variaveis);
 
 private:
     std::string expressao;
     std::string valoracao;
+
+    friend class TipoNo;
 
 };
