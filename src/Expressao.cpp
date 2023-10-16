@@ -1,7 +1,6 @@
 #include <string>
 #include <iostream>
 #include "Expressao.hpp"
-#include "ArvoreBinaria.hpp"
 
 void Expressao::DivideEntrada(std::string entrada)
 {

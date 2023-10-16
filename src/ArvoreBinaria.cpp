@@ -1,6 +1,4 @@
 #include "ArvoreBinaria.hpp"
-#include "Pilha.hpp"
-#include "Expressao.hpp"
 #include <string.h>
 
 ArvoreBinaria::ArvoreBinaria()

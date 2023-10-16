@@ -1,5 +1,4 @@
 #include "TipoNo.hpp"
-#include "Pilha.hpp"
 #include "Expressao.hpp"
 #include <string>
 
