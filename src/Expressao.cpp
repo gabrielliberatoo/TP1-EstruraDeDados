@@ -1,5 +1,5 @@
 #include <string>
-#include <ioestream>
+#include <iostream>
 #include "Expressao.hpp"
 #include "ArvoreBinaria.hpp"
 
@@ -128,7 +128,7 @@ int Expressao::realizaOperacao(char var1, char var2, char operador)
 std::string Expressao::Satisfabilidade(const std::string& expressao, const std::string& variaveis) {
     ArvoreBinaria possibilidades;
     std::string valoração = "";
-    std::string resultado = possibilidades.GerarValorações(expressao, variaveis, valoração);
+    std::string resultado = possibilidades.GerarValoracoes(expressao, variaveis, valoração);
 
     if (!resultado.empty()) {
         return "Satisfatível com valoração: " + resultado;

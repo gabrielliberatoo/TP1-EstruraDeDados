@@ -1,5 +1,6 @@
 #include "TipoNo.hpp"
 #include "Pilha.hpp"
+#include "Expressao.hpp"
 #include <string>
 
 class ArvoreBinaria
@@ -15,6 +16,8 @@ public:
         return raiz;
     }
     std::string Satisfabilidade();
+    std::string GerarValoracoes(const std::string& expressao, const std::string& variaveis, const std::string& valoracao);
+    bool encontraValoracaoSatisfatoria(TipoNo *p, std::string &valoração);
 
 private:
     void InsereRecursivo(TipoNo *&p, std::string item);
